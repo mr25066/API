@@ -7,45 +7,30 @@ use axum::{
 
 use serde::Serialize;
 use sqlx::{FromRow, PgPool};
-
-#[derive(Serialize, FromRow)]
-struct Especialidad {
-    id_especialidad: i32,
-    nombre_especialidad: String,
-    descripcion: Option<String>,
+mod models{
+    pub mod profesor_model;
 }
-
-async fn obtener_especialidades(
-    State(db): State<PgPool>,
-) -> Json<Vec<Especialidad>> {
-
-    let especialidades = sqlx::query_as::<_, Especialidad>(
-        "SELECT * FROM especialidades"
-    )
-    .fetch_all(&db)
-    .await
-    .unwrap();
-
-    Json(especialidades)
+mod controllers{
+    pub mod profesor_comtroller;
 }
+mod services{
+    pub mod profesor_services;
+}
+mod routes;
 
 #[tokio::main]
 async fn main() {
 
     let db = PgPool::connect(
-        "postgresql://postgres.qgytvnuccjsubqesmirq:proyecto1234@aws-1-us-east-1.pooler.supabase.com:6543/postgres"
+        "postgresql://postgres.vdokkavvfsctthvhbvlb:proyecto123@aws-1-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&pgbouncer=true"
     )
     .await
     .unwrap();
 
     println!("Base de datos conectada");
 
-    let app = Router::new()
-        .route(
-            "/especialidades",
-            get(obtener_especialidades),
-        )
-        .with_state(db);
+    let app = routes::crear_rutas(db);
+        
 
     let mostrar = tokio::net::TcpListener::bind("0.0.0.0:3000")
         .await
