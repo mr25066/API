@@ -11,21 +11,25 @@ mod models{
     pub mod profesor_model;
     pub mod materias_model;
     pub mod carreras_model;
+    pub mod inscripciones_model;
 }
 mod controllers{
     pub mod profesor_comtroller;
     pub mod materias_controller;
     pub mod carreras_controller;
+    pub mod inscripciones_controller;
 }
 mod services{
     pub mod profesor_services;
     pub mod materias_services;
     pub mod carreras_services;
+    pub mod inscripciones_services;
 }
 
 mod repository{
     pub mod materias_repository;
     pub mod carreras_repository;
+    pub mod inscripciones_repository;
 }
 pub mod routes;
 
