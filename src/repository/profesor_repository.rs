@@ -1,7 +1,7 @@
-use crate::models::profesor_model::{self, Crearprofesor, Profesor,ActualizarProfesor};
+use crate::models::profesor_model::{ Crearprofesor, Profesor,ActualizarProfesor};
 use sqlx::PgPool;
 
-pub async fn obtener_Profesores(pool: &PgPool) -> Result<Vec<Profesor>, sqlx::Error> {
+pub async fn obtener_profesores(pool: &PgPool) -> Result<Vec<Profesor>, sqlx::Error> {
     let profesores = sqlx::query_as::<_, Profesor>("SELECT * FROM profesores")
         .fetch_all(pool)
         .await?;

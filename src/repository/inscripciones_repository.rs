@@ -33,6 +33,7 @@ pub async fn listar_inscripciones(
         ORDER BY id_inscripcion
         "#
     )
+    .persistent(false)
         .fetch_all(pool)
         .await
 }

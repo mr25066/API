@@ -3,8 +3,8 @@ use sqlx::PgPool;
 use crate::models::profesor_model::{Profesor,Crearprofesor,ActualizarProfesor};
 use crate::repository::profesor_repository;
 
-pub async fn obtener_Profesores_service(pool:&PgPool) -> Result<Vec<Profesor>, String>{
-    profesor_repository::obtener_Profesores(pool)
+pub async fn obtener_profesores_service(pool:&PgPool) -> Result<Vec<Profesor>, String>{
+    profesor_repository::obtener_profesores(pool)
     .await
     .map_err(|e| format!("Error en BD: {}", e))
 }

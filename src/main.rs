@@ -1,61 +1,46 @@
-use axum::{
-    routing::get,
-    Json,
-    Router,
-    extract::State,
-};
-
-use serde::Serialize;
-use sqlx::{FromRow, PgPool};
-mod models{
-    pub mod profesor_model;
-    pub mod materias_model;
+use sqlx::{postgres::PgPoolOptions};
+mod models {
     pub mod carreras_model;
     pub mod inscripciones_model;
+    pub mod materias_model;
+    pub mod profesor_model;
 }
-mod controllers{
-    pub mod profesor_controller;
-    pub mod materias_controller;
+mod controllers {
     pub mod carreras_controller;
     pub mod inscripciones_controller;
+    pub mod materias_controller;
+    pub mod profesor_controller;
 }
-mod services{
-    pub mod profesor_services;
-    pub mod materias_services;
+mod services {
     pub mod carreras_services;
     pub mod inscripciones_services;
+    pub mod materias_services;
+    pub mod profesor_services;
 }
 
-mod repository{
-    pub mod materias_repository;
+mod repository {
     pub mod carreras_repository;
-    pub mod profesor_repository;
     pub mod inscripciones_repository;
+    pub mod materias_repository;
+    pub mod profesor_repository;
 }
 pub mod routes;
 
 #[tokio::main]
 async fn main() {
-
-    let db = PgPool::connect(
+    let db = PgPoolOptions::new()
+    .max_connections(5)
+    .connect(
         "postgresql://postgres.vdokkavvfsctthvhbvlb:proyecto123@aws-1-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&pgbouncer=true"
-       //"postgresql://postgres.xunyklqfgevolgprpmpb:e5wT9nlrBqToWYig@aws-1-us-west-2.pooler.supabase.com:5432/postgres?sslmode=require"
-       // "postgresql://postgres.rwxsbbflnarrfxjcxvpw:Diosmeama1516@@aws-1-us-east-2.pooler.supabase.com:6543/postgres"
-
     )
-        .await
-        .unwrap();
+    .await
+    .unwrap();
     println!("Base de datos conectada");
 
     let app = routes::crear_rutas(db);
 
-
-    let mostrar = tokio::net::TcpListener::bind("0.0.0.0:3000")
-        .await
-        .unwrap();
+    let mostrar = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
     println!("Servidor en puerto 3000");
 
-    axum::serve(mostrar, app)
-        .await
-        .unwrap();
+    axum::serve(mostrar, app).await.unwrap();
 }
