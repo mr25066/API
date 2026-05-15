@@ -14,7 +14,7 @@ mod models{
     pub mod inscripciones_model;
 }
 mod controllers{
-    pub mod profesor_comtroller;
+    pub mod profesor_controller;
     pub mod materias_controller;
     pub mod carreras_controller;
     pub mod inscripciones_controller;
@@ -29,6 +29,7 @@ mod services{
 mod repository{
     pub mod materias_repository;
     pub mod carreras_repository;
+    pub mod profesor_repository;
     pub mod inscripciones_repository;
 }
 pub mod routes;
@@ -37,8 +38,8 @@ pub mod routes;
 async fn main() {
 
     let db = PgPool::connect(
-        //"postgresql://postgres.vdokkavvfsctthvhbvlb:proyecto123@aws-1-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&pgbouncer=true"
-       "postgresql://postgres.xunyklqfgevolgprpmpb:e5wT9nlrBqToWYig@aws-1-us-west-2.pooler.supabase.com:5432/postgres?sslmode=require"
+        "postgresql://postgres.vdokkavvfsctthvhbvlb:proyecto123@aws-1-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&pgbouncer=true"
+       //"postgresql://postgres.xunyklqfgevolgprpmpb:e5wT9nlrBqToWYig@aws-1-us-west-2.pooler.supabase.com:5432/postgres?sslmode=require"
        // "postgresql://postgres.rwxsbbflnarrfxjcxvpw:Diosmeama1516@@aws-1-us-east-2.pooler.supabase.com:6543/postgres"
 
     )
