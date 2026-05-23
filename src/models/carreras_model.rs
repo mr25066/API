@@ -1,6 +1,5 @@
 use serde::{Deserialize, Serialize};
 use sqlx::FromRow;
-
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq, FromRow)]
 pub struct Carreras {
     pub id_carrera: i32,
