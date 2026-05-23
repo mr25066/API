@@ -3,6 +3,9 @@ use axum::{
     Router,
 };
 use sqlx::PgPool;
+use crate::controllers::estudiantes_controller::{
+    crear_estudiante,actualizar_estudiante,obtener_estudiantes,obtener_estudiante_por_id,eliminar_estudiante
+};
 use crate::controllers::carreras_controller::{
     crear_carrera, listar_carreras, obtener_carrera, actualizar_carrera, eliminar_carrera,
 };
@@ -56,6 +59,16 @@ pub fn crear_rutas(
         get(obtener_inscripcion)
             .put(actualizar_inscripcion)
             .delete(eliminar_inscripcion),
-    )
-        .with_state(db)
+    ).route(
+            "/estudiantes",
+            get(obtener_estudiantes)
+                .post(crear_estudiante),
+
+        ).route(
+            "/estudiantes/{id}",
+            get(obtener_estudiante_por_id)
+                .put(actualizar_estudiante)
+                .delete(eliminar_estudiante),
+        )
+            .with_state(db)
 }
