@@ -3,6 +3,7 @@ use sqlx::PgPool;
 use crate::services::carreras_services;
 use serde::Deserialize;
 use crate::models::carreras_model::Carreras;
+
 #[derive(Deserialize)]
 pub struct CarrerasRequest {
     pub nombre_carrera: String,
@@ -33,7 +34,6 @@ pub async fn obtener_carrera(
     Path(id): Path<i32>,
 ) -> Json<Result<Carreras, String>> {
     let result = carreras_services::obtener_carrera_service(&pool, id).await;
-
     match result {
         Ok(data) => Json(Ok(data)),
         Err(e) => Json(Err(format!("{:?}", e))),
@@ -51,13 +51,11 @@ pub async fn actualizar_carrera(
         &body.facultad,
     )
         .await;
-
     match result {
         Ok(data) => Json(Ok(data)),
         Err(e) => Json(Err(format!("{:?}", e))),
     }
 }
-
 pub async fn eliminar_carrera(
     State(pool): State<PgPool>,
     Path(id): Path<i32>,

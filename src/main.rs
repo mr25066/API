@@ -1,3 +1,4 @@
+#![allow(dead_code)]
 use sqlx::{postgres::PgPoolOptions};
 use dotenvy::dotenv; // <-- Agregamos esta importación
 use std::env;
@@ -6,18 +7,21 @@ mod models {
     pub mod inscripciones_model;
     pub mod materias_model;
     pub mod profesor_model;
+    pub mod estudiantes_model;
 }
 mod controllers {
     pub mod carreras_controller;
     pub mod inscripciones_controller;
     pub mod materias_controller;
     pub mod profesor_controller;
+    pub mod estudiantes_controller;
 }
 mod services {
     pub mod carreras_services;
     pub mod inscripciones_services;
     pub mod materias_services;
     pub mod profesor_services;
+    pub mod estudiantes_services;
 }
 
 mod repository {
@@ -25,6 +29,7 @@ mod repository {
     pub mod inscripciones_repository;
     pub mod materias_repository;
     pub mod profesor_repository;
+    pub mod estudiantes_repository;
 }
 pub mod routes;
 
