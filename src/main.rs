@@ -1,4 +1,6 @@
 use sqlx::{postgres::PgPoolOptions};
+use dotenvy::dotenv; // <-- Agregamos esta importación
+use std::env;
 mod models {
     pub mod carreras_model;
     pub mod inscripciones_model;
@@ -28,13 +30,20 @@ pub mod routes;
 
 #[tokio::main]
 async fn main() {
+    // 1. Cargar las variables del archivo .env
+    dotenv().ok();
+
+    // 2. Leer la variable DATABASE_URL
+    let database_url = env::var("DATABASE_URL")
+        .expect("La variable DATABASE_URL no está configurada en el archivo .env");
+
+    // 3. Conectar usando la variable
     let db = PgPoolOptions::new()
-    .max_connections(5)
-    .connect(
-        "postgresql://postgres.vdokkavvfsctthvhbvlb:proyecto123@aws-1-us-east-1.pooler.supabase.com:6543/postgres?sslmode=require&pgbouncer=true"
-    )
-    .await
-    .unwrap();
+        .max_connections(5)
+        .connect(&database_url) // <-- Pasamos la variable aquí
+        .await
+        .unwrap();
+        
     println!("Base de datos conectada");
 
     let app = routes::crear_rutas(db);
